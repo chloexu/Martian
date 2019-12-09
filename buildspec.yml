@@ -24,6 +24,8 @@ phases:
       - echo Build started on `date`
       # build ts
       - ./_build/01_prepare.sh
+      - ls
+      - ls dist/
       # style, lint and local testing
       - ./_build/02_style_lint_check.sh
       - ./_build/03_unit_test.sh
