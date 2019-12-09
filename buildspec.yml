@@ -16,6 +16,7 @@ phases:
   pre_build:
     commands:
       - echo Changing _build/ scripts to be executable
+      - pwd
       - chmod +x _deploy/*.sh
   build:
     commands:
