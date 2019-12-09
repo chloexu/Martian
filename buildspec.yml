@@ -31,7 +31,7 @@ phases:
       - ./_build/03_unit_test.sh
       - ./_build/04_integration_test.sh
       # create package for target environment
-      - ./_build/05_build.sh
+      - ./_build/05_build_package.sh
   post_build:
     commands:
       - echo Build completed on `date`

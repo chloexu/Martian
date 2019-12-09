@@ -8,7 +8,7 @@ mkdir build
 cd build
 
 echo "Copying files..."
-cp -R dist/* ./
+cp -R ../dist/* ./
 
 echo "Zipping files..."
 zip -r ../sb-status-service.zip .
