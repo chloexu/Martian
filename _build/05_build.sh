@@ -8,8 +8,7 @@ mkdir build
 cd build
 
 echo "Copying files..."
-cp ../function/src/StreamShift-4f5f65a469fa.json ../function/dist/
-cp -R ../function/dist/* ./
+cp -R dist/* ./
 
 echo "Zipping files..."
 zip -r ../sb-status-service.zip .
