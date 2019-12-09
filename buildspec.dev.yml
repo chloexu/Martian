@@ -1,0 +1,44 @@
+# buildspec.dev.yml
+version: 0.2
+
+env:
+  variables:
+    TARGET_REGION: us-east-1
+    SLS_DEBUG: ''
+    DEPLOYER_ROLE_ARN: 'arn:aws:iam::<dev_account_id>:role/ac-rest-api-dev-deployer-role'
+
+phases:
+  pre_build:
+    commands:
+      - chmod +x build.sh
+      - ./build.sh install
+  build:
+    commands:
+      # Do some local testing
+      - ./build.sh test-unit
+      - ./build.sh test-integration
+      # Create separate packages for each target environment
+      - ./build.sh clean
+      - ./build.sh package dev $TARGET_REGION
+      - ./build.sh package staging $TARGET_REGION
+      - ./build.sh package prod $TARGET_REGION
+      # Deploy to DEV and run acceptance tests there
+      - ./build.sh deploy dev $TARGET_REGION dist/dev
+      - ./build.sh test-acceptance dev
+
+artifacts:
+  files:
+    - '**/*'
+  secondary-artifacts:
+    devPackage:
+      base-directory: ./dist/dev
+      files:
+        - '**/*'
+    stagingPackage:
+      base-directory: ./dist/staging
+      files:
+        - '**/*'
+    prodPackage:
+      base-directory: ./dist/prod
+      files:
+        - '**/*'

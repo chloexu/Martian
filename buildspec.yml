@@ -1,0 +1,37 @@
+# buildspec.yml
+version: 0.2
+
+env:
+  variables:
+    TARGET_REGION: us-east-1
+    NODE_ENV: dev
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo Installing Mocha...
+      - npm install -g mocha
+  pre_build:
+    commands:
+      - echo Changing _build/ scripts to be executable
+      - chmod +x _deploy/*.sh
+  build:
+    commands:
+      - echo Build started on `date`
+      # build ts
+      - ./_build/01_prepare.sh
+      # style, lint and local testing
+      - ./_build/02_style_lint_check.sh
+      - ./_build/03_unit_test.sh
+      - ./_build/04_integration_test.sh
+      # create package for target environment
+      - ./_build/05_build.sh
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - sb-status-service.zip
