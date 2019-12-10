@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as R from "ramda";
 
 // Best practice to separate functions from handler
